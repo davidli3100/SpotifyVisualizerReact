@@ -15,42 +15,27 @@ let testData = {
     song: {
         name: "Uptown Girl",
         artist: "Billy Joel",
-        duration: "4000", //this should be in ms, then converted into a time stamp later
+        duration: 4000,
+        time: 1000, //this should be in ms, then converted into a time stamp later
         img: "#"
     }
 };
 
-/** Brief Explanation about what's happening here
-* 1. I use a constructor to set a state for the data I will be accessing later. React requires that I call
-* a super inside my constructor before calling "this" onto itself
-* 
-* 2. componentDidMount() is a function that activates when the components are first rendered, then you set
-* the state of the component to the data you want
-* 
-* 3. within my render, you will see "{this...}" -> renders into text, the && just checks if the data
-* exists or is undefined/null, then you render the data into it. (Truthy/falsy within JS)
-*/
 
+/**
+ * SongTitle just passes the properties given to it by the Player main component and displays it
+ */
 class SongTitle extends Component {
-    constructor() {
-        super();
-        this.state = {serverData : {}}
-    }
-    componentDidMount() {
-        this.setState({serverData: testData})
-    }
 
     render () {
         return (
             <div className="song-title col-sm-12">
                 <h1 id="start-title">
-                {this.state.serverData.song &&
-                 this.state.serverData.song.name}
+                    {this.props.song.name}
                 </h1>
 
                 <h3>
-                {this.state.serverData.song &&
-                 this.state.serverData.song.artist}
+                    {this.props.song.artist}
                 </h3>
             </div>
         )
@@ -71,14 +56,47 @@ class Progress extends Component {
 }
 
 
-
+/** Brief Explanation about what's happening here
+* 1. I use a constructor to set a state for the data I will be accessing later. React requires that I call
+* a super inside my constructor before calling "this" onto itself
+* 
+* 2. componentDidMount() is a function that activates when the components are first rendered, then you set
+* the state of the component to the data you want
+* 
+* 3. within my render, you will see "{this...}" -> renders into text, the && just checks if the data
+* exists or is undefined/null, then you render the data into it. (Truthy/falsy within JS)
+* 
+* 4. wrapping my components within objects and then calling a boolean method upon them prevents them from rendering
+* if there has not yet been data provided via the API endpoint
+*/
 export default class Home extends Component {
+
+    constructor() {
+        super();
+        this.state = {serverData : {}}
+    }
+    componentDidMount() {
+        setTimeout(() => { //arrow functions for async
+        this.setState({serverData: testData});
+        }, 2000); //run this 2 secs after components are mounted
+    }
 
     render() {
         return (
             <div className="contain col-sm-12">
-                <Title/>
-                <Button/>
+                {this.state.serverData.song ? //if serverData.song exists render the div below, else jump to the colon and render that
+                <div>
+                    <SongTitle songName={this.state.serverData.song &&
+                                        this.state.serverData.song.name}
+                            artist={this.state.serverData.song &&
+                                    this.state.serverData.song.artist}/> 
+                    
+                    <Progress duration={this.state.serverData.song &&
+                                        this.state.serverData.song.duration}
+                            time={this.state.serverData.song &&
+                                    this.state.serverData.song.time}/>
+                </div> : <h1>Loading</h1>
+                }
             </div>
         )
     }
