@@ -3,13 +3,14 @@
  * Just using another view page to implement within a router in App.js
  */
 import React, { Component } from 'react';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './css/Home.css'; //import css for this web page
 
 class Title extends Component {
     render () {
         return (
             <div className="title col-sm-12">
-                <h1 style={{color: '#fff'}}> Spotify Music Visualizer </h1>
+                <h1 id="start-title"> Spotify Music Visualizer </h1>
                 <h4> Connect Your Spotify Account to Continue </h4>
             </div>
         )
@@ -33,7 +34,7 @@ export default class Home extends Component {
 
     render() {
         return (
-            <div className="body">
+            <div className="contain col-sm-12">
                 <Title/>
                 <Button/>
             </div>
