@@ -1,3 +1,9 @@
+/*
+ do I really need to comment CSS? 
+*/
+
+/* implicitly state the fonts as well as gradient for not only the React .App body, as well as any containing 
+html div (set design)*/
 .App, body {
     font-family: 'Montserrat', sans-serif;
     background: #00F260;  /* fallback for old browsers */
@@ -6,6 +12,8 @@
     color:white;
   }
   
+/* start button, just some basic styling to turn the <a> into a button without the need for an actual
+button */
   .start_btn {
     font-size: 1.7rem;
     background-color: #1ed760 !important;
@@ -19,11 +27,30 @@
     color: white;
   }
   
+/*  animations on hover of button */
   .start_btn:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     transform: scale(0.95);
   }
+
+  /* revert button back to normal state after click */
+  .start_btn::after {
+    transform: scale(1);
+    font-size: 1.7rem;
+    background-color: #1ed760 !important;
+    line-height: 1;
+    border-radius: 500px;
+    font-weight: 600;
+    padding: 2rem 3rem;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    text-decoration: none !important;
+    color: white;
+  }
   
+/* centering some sections 
+EDIT: deprecated, not in use anymore in this project as react has components
+*/
   .main_section {
     margin: 0 auto;
   }
@@ -34,6 +61,7 @@
   }
   
   #start-title {
+    font-size: 3.3rem;
     padding: 10px 0;
     font-weight:800;
   }
@@ -49,6 +77,7 @@
     margin: auto;
   }
   
+/* vertically centering the main containing div */
   .contain {
     position: relative;
     top: 50%;
