@@ -3,9 +3,13 @@
  * Just using another view page to implement within a router in App.js
  */
 import React, { Component } from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'; //re-importing bootstrap just in case
 import './css/Home.css'; //import css for this web page
 
+/**
+ * this local class "Title" just takes a small button containing div, and the button itself to turn it 
+ * into a component usable within my main Home component
+ */
 class Title extends Component {
     render () {
         return (
