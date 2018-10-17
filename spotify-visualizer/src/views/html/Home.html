@@ -1,17 +1,6 @@
-/**
- * Creating a home page, that should be fully static (pending state changes to the callback and login uris)
- * Just using another view page to implement within a router in App.js
- */
-import React, { Component } from 'react';
-import './css/Home.css';
+<!DOCTYPE html>
+<html>
 
-export default class Home extends Component {
-    state = {
-
-    }
-
-    render() {
-        return (
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,15 +23,15 @@ export default class Home extends Component {
   <div class="contain col-sm-12">
   <div class="title col-sm-12">
     <h1 id="start-title">
-      <%= title %>
+        Spotify Music Visualizer
     </h1>
     <h4>
-      <%= sub_title %>
+        Connect Your Spotify Account to Continue
     </h4>
   </div>
 
   <div class="get_started col-sm-12">
-    <a class="start_btn btn-sm btn-success" href="<%= auth_link %>">Connect To Spotify</a>
+    <a class="start_btn btn-sm btn-success" href="#">Connect To Spotify</a>
   </div>
   </div>
 </div>
@@ -60,6 +49,5 @@ export default class Home extends Component {
     crossorigin="anonymous"></script>
 
 </body>
-        )
-    }
-}
+
+</html>
