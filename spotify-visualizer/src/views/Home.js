@@ -3,7 +3,6 @@
  * Just using another view page to implement within a router in App.js
  */
 import React, { Component } from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'; //re-importing bootstrap just in case
 import './css/Home.css'; //import css for this web page
 
 /**
@@ -30,6 +29,7 @@ class Button extends Component {
         )
     }
 }
+
 
 export default class Home extends Component {
     state = {

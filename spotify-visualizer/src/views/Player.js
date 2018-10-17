@@ -21,7 +21,14 @@ let testData = {
     }
 };
 
-
+/**
+ * This function takes a Spotify User Access Token (which is generated automatically via the OAuth flow) and then creates an API call to Spotify's Connect API to get the user's playback state
+ * @name getUserPlaybackState
+ * @param {string} input an access token
+ * @returns {JSON} returns a JSON object of the user's playback state
+ */
+function getUserPlaybackState(access_token) {
+}
 /**
  * SongTitle just passes the properties given to it by the Player main component and displays it
  */
@@ -57,17 +64,23 @@ class Progress extends Component {
 
 
 /** Brief Explanation about what's happening here
-* 1. I use a constructor to set a state for the data I will be accessing later. React requires that I call
+* <ol>
+* <li> I use a constructor to set a state for the data I will be accessing later. React requires that I call
 * a super inside my constructor before calling "this" onto itself
+* </li> <br>
 * 
-* 2. componentDidMount() is a function that activates when the components are first rendered, then you set
+* <li> componentDidMount() is a function that activates when the components are first rendered, then you set
 * the state of the component to the data you want
-* 
-* 3. within my render, you will see "{this...}" -> renders into text, the && just checks if the data
+* </li> <br>
+*
+* <li> Within my render, you will see <code>{this.state.serverData}</code> which renders into text, the && just checks if the data
 * exists or is undefined/null, then you render the data into it. (Truthy/falsy within JS)
-* 
-* 4. wrapping my components within objects and then calling a boolean method upon them prevents them from rendering
+* </li> <br>
+*
+* <li>Wrapping my components within objects and then calling a boolean method upon them prevents them from rendering
 * if there has not yet been data provided via the API endpoint
+* </li> <br>
+* </ol>
 */
 export default class Home extends Component {
 
