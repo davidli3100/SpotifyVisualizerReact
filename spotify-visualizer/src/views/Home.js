@@ -4,19 +4,41 @@
  */
 import React, { Component } from 'react';
 import './css/Home.css'; //import css for this web page
-import queryString from 'query-string';
+import queryString from 'query-string'; //import queryString to take params from uri
+import { Line } from 'rc-progress'; //progress bar import
 require('dotenv').config();
 
-//authentication url
-const AUTH_URL = process.env.AUTH_URL;
 /**
  * This function takes a Spotify User Access Token (which is generated automatically via the OAuth flow) and then creates an API call to Spotify's Connect API to get the user's playback state
  * @name getUserPlaybackState
- * @param {string} input an access token
+ * @param {string} input takes an access token
  * @returns {JSON} returns a JSON object of the user's playback state
  */
 function getUserPlaybackState(access_token) {
 }
+
+/**
+ * @name ProgressBar
+ * @param {JSON} input takes a JSON fetch api call as a prop
+ * @returns {ProgressBar} returns a rendered progress bar component that updates every second
+ */
+ class ProgressBar extends Component {
+    // constructor(props) {
+    //     super(props)
+
+    //     this.state = {
+    //         progress: 0
+    //     }
+    // }
+    render() {
+    return (
+        <div className="progress-bar-custom">
+        <Line percent={this.props.song.progress} strokeWidth = "5" strokeColor="#FFFFFF" />
+        </div>
+     )
+    }
+}
+
 /**
  * SongTitle just passes the properties given to it by the Player main component and displays it
  */
@@ -32,19 +54,6 @@ class SongTitle extends Component {
                 <h3>
                     {this.props.song.artist}
                 </h3>
-            </div>
-        )
-    }
-}
-
-/**
- * Progress bar, re-renders this progress bar 
- */
-class Progress extends Component {
-    render () {
-        return (
-            <div className="get_started col-sm-12">
-                <a className="start_btn btn-sm btn-success" href="#">Connect To Spotify</a>
             </div>
         )
     }
@@ -119,7 +128,7 @@ export default class Home extends Component {
 
         /**
          * @name fetchData
-         * @param {endpoint, object-literal, header}
+         * @param {string} input
          * @returns a JSON array/file of data, the fetch function itself returns a promise, which can be asynchronous
          * 
          * the header includes the <code>access token</code> which was fetched earlier in the <code>queryString.parse</code>
@@ -143,9 +152,7 @@ export default class Home extends Component {
                         artist={this.state.serverData.song &&
                                 this.state.serverData.song.artist}/> 
                 
-                <Progress duration={this.state.serverData.song &&
-                                    this.state.serverData.song.duration}
-                        time={this.state.serverData.song &&
+                <ProgressBar progress={this.state.serverData.song &&
                                 this.state.serverData.song.time}/>
             </div> : 
             <div >
