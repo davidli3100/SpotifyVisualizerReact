@@ -4,6 +4,7 @@
  */
 import React, { Component } from 'react';
 import './css/Home.css'; //import css for this web page
+import queryString from 'query-string';
 require('dotenv').config();
 
 //authentication url
@@ -99,10 +100,36 @@ export default class Home extends Component {
 
     constructor() {
         super();
-        this.state = {serverData : {}}
+        this.state = {
+            serverData : {}
+        }
     }
     componentDidMount() {
+        /**
+         * @name parsedToken
+         * @param {string} window.location.search
+         * @returns {string} a formmated query string (access token)
+         * 
+         * takes the returned access token an user gives from the auth flow and returns an access token (completely parsed and encoded)
+         */
+        let parsed = queryString.parse(window.location.search);
+        console.log(parsed);
+        let accessToken = parsed.access_token;
+        console.log(accessToken);
 
+        /**
+         * @name fetchData
+         * @param {endpoint, object-literal, header}
+         * @returns a JSON array/file of data, the fetch function itself returns a promise, which can be asynchronous
+         * 
+         * the header includes the <code>access token</code> which was fetched earlier in the <code>queryString.parse</code>
+         * after you fetch the data, asynchronously return a promise and make use of the responose within another state
+         */
+
+         fetch('https://api.spotify.com/v1/me/player', {
+            headers: {'Authorization': 'Bearer ' + accessToken}
+          }).then(response => response.json())
+            .then(data => console.log(data))
     }
 
 
@@ -121,7 +148,7 @@ export default class Home extends Component {
                         time={this.state.serverData.song &&
                                 this.state.serverData.song.time}/>
             </div> : 
-            <div className="contain col-sm-12">
+            <div >
                 <Title/>
                 <Button/>
             </div>

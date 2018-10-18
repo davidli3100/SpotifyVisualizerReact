@@ -5,6 +5,7 @@
   "dependencies": {
     "dotenv": "^6.1.0",
     "jsdoc": "^3.5.5",
+    "query-string": "^6.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.5"
