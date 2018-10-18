@@ -7,6 +7,7 @@ class App extends Component {
     return (
       <div className="main col-sm-12">
         <Home />
+        
       </div>
     );
   }
