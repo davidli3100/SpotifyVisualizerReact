@@ -33,7 +33,7 @@ function getUserPlaybackState(access_token) {
     render() {
     return (
         <div className="progress-bar-custom">
-        <Line percent={this.props.song.progress} strokeWidth = "5" strokeColor="#FFFFFF" />
+        <Line percent={this.props.progress} strokeWidth = "5" strokeColor="#FFFFFF" />
         </div>
      )
     }
@@ -48,11 +48,11 @@ class SongTitle extends Component {
         return (
             <div className="song-title col-sm-12">
                 <h1 id="start-title">
-                    {this.props.song.name}
+                    {this.props.name}
                 </h1>
 
                 <h3>
-                    {this.props.song.artist}
+                    {this.props.artist}
                 </h3>
             </div>
         )
@@ -110,7 +110,7 @@ export default class Home extends Component {
     constructor() {
         super();
         this.state = {
-            serverData : {}
+            serverData: {}
         }
     }
     componentDidMount() {
@@ -142,15 +142,15 @@ export default class Home extends Component {
             .then(data => {
                 console.log(data);
                 this.setState({
-                serverData: {
-                    song: {
+                    song: {                    
                         name: data.item.name,
+                        artist: data.item.artists[0].name,
                         time: data.progress_ms,
                         duration: data.item.duration_ms
-
-                    }
-                }
-            })
+                    }             
+            });
+            console.log(this.state);
+            console.log(this.state.song);
         })
     }
 
@@ -158,14 +158,15 @@ export default class Home extends Component {
     render() {
         return (
             <div className="contain col-sm-12">
-            {this.state.serverData.song ? //if serverData.song exists render the div below, else jump to the colon and render that
+            
+            {this.state.song ? //if serverData.song exists render the div below, else jump to the colon and render that
             <div>
-                <SongTitle songName={ this.state.serverData.song.name }
-                           artist={ this.state.serverData.song.artist }
+                <SongTitle songName={ this.state.song.name }
+                           artist={ this.state.song.artist }
                                     /> 
                 
-                <ProgressBar progress={ this.state.serverData.song.time } 
-                             duration={ this.state.serverData.song.duration }
+                <ProgressBar progress={ this.state.song.time } 
+                             duration={ this.state.song.duration }
                                     />
             </div> : //if the user has not authenticated and the server does not have data, redirect to beginning of auth flow
             <div >
