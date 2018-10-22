@@ -138,7 +138,18 @@ export default class Home extends Component {
          fetch('https://api.spotify.com/v1/me/player', {
             headers: {'Authorization': 'Bearer ' + accessToken}
           }).then(response => response.json())
-            .then(data => console.log(data))
+           // .then(data => console.log(data)) //this was for debugging - removed for prod
+            .then(data => this.setState({
+                serverData: {
+                    song: {
+                        name: data.item.name,
+                        time: data.progress_ms,
+                        duration: data.item.duration_ms
+
+                    }
+                }
+            })
+           )
     }
 
 
@@ -147,14 +158,14 @@ export default class Home extends Component {
             <div className="contain col-sm-12">
             {this.state.serverData.song ? //if serverData.song exists render the div below, else jump to the colon and render that
             <div>
-                <SongTitle songName={this.state.serverData.song &&
-                                    this.state.serverData.song.name}
-                        artist={this.state.serverData.song &&
-                                this.state.serverData.song.artist}/> 
+                <SongTitle songName={ this.state.serverData.song.name }
+                           artist={ this.state.serverData.song.artist }
+                                    /> 
                 
-                <ProgressBar progress={this.state.serverData.song &&
-                                this.state.serverData.song.time}/>
-            </div> : 
+                <ProgressBar progress={ this.state.serverData.song.time } 
+                             duration={ this.state.serverData.song.duration }
+                                    />
+            </div> : //if the user has not authenticated and the server does not have data, redirect to beginning of auth flow
             <div >
                 <Title/>
                 <Button/>
