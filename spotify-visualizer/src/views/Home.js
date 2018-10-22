@@ -139,7 +139,9 @@ export default class Home extends Component {
             headers: {'Authorization': 'Bearer ' + accessToken}
           }).then(response => response.json())
            // .then(data => console.log(data)) //this was for debugging - removed for prod
-            .then(data => this.setState({
+            .then(data => {
+                console.log(data);
+                this.setState({
                 serverData: {
                     song: {
                         name: data.item.name,
@@ -149,7 +151,7 @@ export default class Home extends Component {
                     }
                 }
             })
-           )
+        })
     }
 
 
