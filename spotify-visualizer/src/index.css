@@ -6,6 +6,23 @@
   color:white;
 }
 
+.song-title {
+  margin-top: 30px;
+}
+.artist {
+  margin-top: 10px;
+}
+
+.song {
+  width:90%;
+  margin: 2.5rem auto;
+}
+
+.album_img {
+  border-radius: 13px;
+  width: 100%;
+}
+
 .start_btn {
   font-size: 1.7rem;
   background-color: #1ed760 !important;

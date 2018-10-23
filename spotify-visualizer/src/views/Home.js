@@ -22,22 +22,6 @@ function getUserPlaybackState(access_token) {
  * @param {JSON} input takes a JSON fetch api call as a prop
  * @returns {ProgressBar} returns a rendered progress bar component that updates every second
  */
- class ProgressBar extends Component {
-    // constructor(props) {
-    //     super(props)
-
-    //     this.state = {
-    //         progress: 0
-    //     }
-    // }
-    render() {
-    return (
-        <div className="progress-bar-custom">
-        <Line percent={this.props.progress} strokeWidth = "5" strokeColor="#FFFFFF" />
-        </div>
-     )
-    }
-}
 
 /**
  * SongTitle just passes the properties given to it by the Player main component and displays it
@@ -46,14 +30,23 @@ class SongTitle extends Component {
 
     render () {
         return (
-            <div className="song-title col-sm-12">
-                <h1 id="start-title">
-                    {this.props.name}
-                </h1>
+            <div className="song col-sm-12">
+                <div className="album-image-div col-sm-3" >
+                    <img className="album_img" src={this.props.albumImage} alt="album image"></img>
+                </div>
+                <div className="title-div col-sm-9">
+                    <h1 className="song-title">
+                        {this.props.songName}
+                    </h1>
+                
 
-                <h3>
-                    {this.props.artist}
-                </h3>
+                    <h3 className="artist">
+                        {this.props.artist}
+                    </h3>
+
+                    <Line id="progress" percent={this.props.progress} strokeWidth = "1.5" trailWidth="1.5" strokeColor="#FFFFFF" />
+
+                </div>
             </div>
         )
     }
@@ -105,7 +98,30 @@ class Button extends Component {
 * <li> Truthy/falsy logic then renders (redirects) user to the <code>login</code> screen if there is no server data available (i.e. they aren't logged in)
 * </ol>
 */
+
+
 export default class Home extends Component {
+    fetchData(accessToken) {
+        fetch('https://api.spotify.com/v1/me/player', {
+                        headers: {'Authorization': 'Bearer ' + accessToken}
+                    }).then(response => response.json())
+                    // .then(data => console.log(data)) //this was for debugging - removed for prod
+                        .then(data => {
+                            console.log(data);
+                            this.setState({
+                                song: {                    
+                                    song_name: data.item.name,
+                                    artist: data.item.artists[0].name,
+                                    time: (data.progress_ms*100)/data.item.duration_ms, //convert times in ms to progress in %
+                                    duration: data.item.duration_ms,
+                                    album_url: data.item.album.images[0].url
+                                }             
+                        });
+                        console.log(this.state);
+                        console.log(this.state.song);
+                    })
+                }
+                    
 
     constructor() {
         super();
@@ -134,25 +150,13 @@ export default class Home extends Component {
          * the header includes the <code>access token</code> which was fetched earlier in the <code>queryString.parse</code>
          * after you fetch the data, asynchronously return a promise and make use of the responose within another state
          */
+        if(accessToken) {
+            this.fetchData(accessToken);
+            this.state = setInterval(() => this.fetchData(accessToken), 800);
 
-         fetch('https://api.spotify.com/v1/me/player', {
-            headers: {'Authorization': 'Bearer ' + accessToken}
-          }).then(response => response.json())
-           // .then(data => console.log(data)) //this was for debugging - removed for prod
-            .then(data => {
-                console.log(data);
-                this.setState({
-                    song: {                    
-                        name: data.item.name,
-                        artist: data.item.artists[0].name,
-                        time: data.progress_ms,
-                        duration: data.item.duration_ms
-                    }             
-            });
-            console.log(this.state);
-            console.log(this.state.song);
-        })
-    }
+            } 
+               
+}
 
 
     render() {
@@ -161,13 +165,12 @@ export default class Home extends Component {
             
             {this.state.song ? //if serverData.song exists render the div below, else jump to the colon and render that
             <div>
-                <SongTitle songName={ this.state.song.name }
+                <SongTitle songName={ this.state.song.song_name }
                            artist={ this.state.song.artist }
+                           albumImage={this.state.song.album_url}
+                           progress={ this.state.song.time }
                                     /> 
                 
-                <ProgressBar progress={ this.state.song.time } 
-                             duration={ this.state.song.duration }
-                                    />
             </div> : //if the user has not authenticated and the server does not have data, redirect to beginning of auth flow
             <div >
                 <Title/>
