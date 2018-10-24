@@ -101,12 +101,12 @@ class Button extends Component {
 
 
 export default class Home extends Component {
+
     fetchData(accessToken) {
         fetch('https://api.spotify.com/v1/me/player', {
-                        headers: {'Authorization': 'Bearer ' + accessToken}
-                    }).then(response => response.json())
-                    // .then(data => console.log(data)) //this was for debugging - removed for prod
-                        .then(data => {
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken}
+                    }).then(response => response.json()).then(data => {
                             console.log(data);
                             this.setState({
                                 song: {                    
@@ -121,6 +121,25 @@ export default class Home extends Component {
                         console.log(this.state.song);
                     })
                 }
+
+    getNewToken(refreshToken) {
+        fetch('https://api.spotify.com/api/token', {
+            method: "POST",
+            mode: "cors",
+            body: {
+                'grant_type': 'refresh_token',
+                'refresh_token': refreshToken
+            },
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": 'application/x-www-form-urlencoded',
+                "Authorization": 'Basic ' + btoa(process.env.CLIENT_ID + ':' + process.env.SECRET)
+            }
+        }).then(response => response.json())
+          .then(data => {
+              console.log("refresh" + data);
+          })
+    }
                     
 
     constructor() {
@@ -141,6 +160,8 @@ export default class Home extends Component {
         console.log(parsed);
         let accessToken = parsed.access_token;
         console.log(accessToken);
+        let refreshToken = parsed.refresh_token;
+        console.log(refreshToken);
 
         /**
          * @name fetchData
@@ -153,7 +174,11 @@ export default class Home extends Component {
         if(accessToken) {
             this.fetchData(accessToken);
             this.state = setInterval(() => this.fetchData(accessToken), 800);
-
+            try { //trying to get a new access token after an hour using the refresh token, returns a 400 error, will try later
+            this.getNewToken(refreshToken);
+            } catch(e) {
+                console.log(e);
+            }
             } 
                
 }
