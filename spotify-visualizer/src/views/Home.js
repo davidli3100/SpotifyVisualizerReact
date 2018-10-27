@@ -120,7 +120,7 @@ export default class Home extends Component {
                         console.log(this.state);
                         console.log(this.state.song);
                     })
-                }
+        }
 
     getNewToken(refreshToken) {
         fetch('https://api.spotify.com/api/token', {
