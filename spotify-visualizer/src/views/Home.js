@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import './css/Home.css'; //import css for this web page
 import queryString from 'query-string'; //import queryString to take params from uri
 import { Line } from 'rc-progress'; //progress bar import
+import P5Wrapper from 'react-p5-wrapper'; //react p5 package
 require('dotenv').config();
 
 /**
@@ -139,6 +140,10 @@ export default class Home extends Component {
           .then(data => {
               console.log("refresh" + data);
           })
+    }
+
+    loadp5player(tempo, danceability) {
+         p5script = sdfadf
     }
                     
 
