@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import './css/Home.css'; //import css for this web page
 import queryString from 'query-string'; //import queryString to take params from uri
 import { Line } from 'rc-progress'; //progress bar import
-import P5Wrapper from 'react-p5-wrapper'; //react p5 package
 require('dotenv').config();
 
 /**
@@ -15,14 +14,8 @@ require('dotenv').config();
  * @param {string} input takes an access token
  * @returns {JSON} returns a JSON object of the user's playback state
  */
-function getUserPlaybackState(access_token) {
-}
 
-/**
- * @name ProgressBar
- * @param {JSON} input takes a JSON fetch api call as a prop
- * @returns {ProgressBar} returns a rendered progress bar component that updates every second
- */
+
 
 /**
  * SongTitle just passes the properties given to it by the Player main component and displays it
@@ -77,6 +70,7 @@ class Button extends Component {
         )
     }
 }
+
 
 /** Brief Explanation about what's happening here
 * <ol>
@@ -141,15 +135,12 @@ export default class Home extends Component {
               console.log("refresh" + data);
           })
     }
-
-    loadp5player(tempo, danceability) {
-         p5script = sdfadf
-    }
-                    
-
+                  
     constructor() {
         super();
         this.state = {
+            tempo: 90,
+            danceability: 0,
             serverData: {}
         }
     }
@@ -192,6 +183,9 @@ export default class Home extends Component {
     render() {
         return (
             <div className="contain col-sm-12">
+
+            
+            {/* <P5Wrapper sketch={sketch} tempo={this.state.tempo} danceability = {this.state.danceability}/> */}
             
             {this.state.song ? //if serverData.song exists render the div below, else jump to the colon and render that
             <div>

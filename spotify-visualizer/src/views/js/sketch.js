@@ -1,3 +1,5 @@
+export default function sketch(p) {
+
 let analysis = {};
 let features = {};
 var diameter;
@@ -8,12 +10,12 @@ const test = {
     "BPM": 60,
 }
 
-function setup() {
-    createCanvas(windowWidth, windowHeight, P2D);
-    colorMode(HSB, 360, 100, 100);
-    noStroke();
-    ellipseMode(RADIUS);
-    frameRate(60);
+p.setup = function() {
+    p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
+    p.colorMode(p.HSB, 360, 100, 100);
+    p.noStroke();
+    p.ellipseMode(p.RADIUS);
+    p.frameRate(60);
 }
 
 
@@ -25,29 +27,34 @@ function setup() {
  * change size according to volume
  * beat circle to tempo from API
  */
-function draw() {
-    var r = millis() / (1000 / (test.BPM / 60.0));
-    r -= int(r);
-    diameter = map(r,0,2.5,400,0); //map the bpm to diameter, and then change diameter each frame to increase/decrease based on tatums
+p.draw = function() {
+    var r = p.millis() / (1000 / (test.BPM / 60.0));
+    r -= p.int(r);
+    diameter = p.map(r,0,2.5,400,0); //map the bpm to diameter, and then change diameter each frame to increase/decrease based on tatums
     console.log(diameter)
-    background("#eeeeee");
+    p.background("#eeeeee");
     // *slightly* slow down the seizure-inducing radial gradient effects
     for (var i = 0; i < 7; i++) {
-        drawGradient(windowWidth/2, windowHeight/2)    
+        p.drawGradient(p.windowWidth/2, p.windowHeight/2)    
     }
+}
+
+p.getR = function(props) {
+    return props.tempo
+}
+
+p.getDanceability = function(props) {
+    return props.danceability
 }
 
 //makes it look like a speaker driver bouncing around in a weird way
-function drawGradient(x, y) {
+p.drawGradient = function(x, y) {
     var radius = diameter / 2;
-    var randColor = random(0, 360);
+    var randColor = p.random(0, 360);
     for (var r = radius; r > 0; --r) {
-        fill(200, randColor, 120); //blue
-        ellipse(x, y, r, r);
+        p.fill(200, randColor, 120); //blue
+        p.ellipse(x, y, r, r);
         randColor = (randColor + 1) % 69; //tried random numbers until it looked good
+        }
     }
 }
-
-// function drawRotatingLineThings(x)
-
-
