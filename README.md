@@ -55,6 +55,7 @@ In the app, you will need your CLIENT_ID and CLIENT_SECRET, make sure to set you
 In each folder, create a ```.env``` file to store your environment variables. 
 
 In the spotify-visualizer folder, you will need the following variables
+
 | Variable | Description |
 | ------ | ------ |
 | PORT | The port you want the frontend server to run off of (defaults to 3000) |
@@ -63,6 +64,7 @@ In the spotify-visualizer folder, you will need the following variables
 |AUTH_URL| Authentication URL the "Login with Spotify" button redirects to |
 
 In the spotify-visualizer-backend folder, add these variables to the ```.env``` file you created
+
 | Variable | Description |
 | ------ | ------ |
 | PORT | The port you want the frontend server to run off of (defaults to 80) |
