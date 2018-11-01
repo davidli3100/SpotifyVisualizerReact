@@ -1,6 +1,6 @@
 # P5.js Spotify Visualizer
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
 
 ![image](https://i.imgur.com/DuxCghA.jpg?raw=true)
 
