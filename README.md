@@ -1,8 +1,9 @@
 # P5.js Spotify Visualizer
 
-https://i.imgur.com/DuxCghA.jpg
-
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+
+![image](https://i.imgur.com/DuxCghA.jpg?raw=true)
+
 
 This Spotify Visualizer was created using the create-react-app npm package as a barebones framework and an Oauth Bridge Template
   - Visualize the BPM of your currently playing Spotify Song
